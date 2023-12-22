@@ -24,7 +24,7 @@ const LoginPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleLogin = () => {
-    if (username === "joe" && password === "123") {
+    if (username === "eG6QTi3FpTfAYHH3u4T" && password === "eG6QTi3FpTfAYHH3u4T") {
       setIsLoggedIn(true);
     } else {
       onOpen(); // Open the modal for incorrect credentials
