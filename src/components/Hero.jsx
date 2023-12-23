@@ -7,8 +7,51 @@ import spin from "../assets/spin.jpg";
 import rock from "../assets/rock.jpg";
 import number from "../assets/number.jpg";
 import ludo from "../assets/ludo.jpg";
+import React, { useState } from "react";
 
 export default function Hero() {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [coinFlipResult, setCoinFlipResult] = useState('')
+
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setWinner('')
+  };
+
+  const [inputValue, setInputValue] = useState('');
+
+  const [winner, setWinner] = useState('');
+
+  const flipCoin = () => {
+    if (inputValue.toLowerCase() === 'https://jbgames.fun/user/play/game/head_tail') {
+      const result = Math.random() < 0.5 ? 'heads' : 'tails';
+      setWinner(result);
+    } else if (inputValue.toLowerCase() === 'https://jbgames.fun/user/play/game/spin_wheel') {
+      const result = Math.random() < 0.5 ? 'blue' : 'red';
+      setWinner(result);
+    } else if (inputValue.toLowerCase() === 'https://jbgames.fun/user/play/game/rock_paper_scissors') {
+      const options = ['rock', 'paper', 'scissors'];
+      const randomIndex = Math.floor(Math.random() * options.length);
+      setWinner(options[randomIndex]);
+    } else if (inputValue.toLowerCase() === 'number') {
+      setWinner('number');
+    } else if (inputValue.toLowerCase() === 'https://jbgames.fun/user/play/game/dice_rolling') {
+      const randomNumber = Math.floor(Math.random() * 6) + 1;
+      setWinner(randomNumber);
+    } else {
+      setWinner('error');
+    }
+  };
+  
+
+
+
   return (
     <div className="bg-[#f8f9fa] p-4">
       <div className="max-w-screen-lg mx-auto">
@@ -36,7 +79,7 @@ export default function Hero() {
                 <div className="text-xs text-gray-500">in 02:24:59</div>
               </div>
               <div className="flex flex-wrap gap-4 mb-4">
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center" onClick={() => openModal(coin)} >
                   <img
                     alt="Lakers"
                     className="w-24 h-24 rounded-md"
@@ -51,22 +94,21 @@ export default function Hero() {
                   <div className="mt-2 text-lg font-semibold">Coin</div>
                   <div className="text-yellow-500">x1.20</div>
                 </div>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center" onClick={() => openModal(coin)}>
                   <img
                     alt="Warriors"
                     className="w-24 h-24 rounded-md"
                     height="100"
                     src={spin}
                     style={{
-                      aspectRatio: "100/100",
-                      objectFit: "cover",
+                      aspectRatio: "100/100",objectFit: "cover",
                     }}
                     width="100"
                   />
                   <div className="mt-2 text-lg font-semibold">Spin</div>
                   <div className="text-yellow-500">x03.30</div>
                 </div>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center" onClick={() => openModal(coin)}>
                   <img
                     alt="Warriors"
                     className="w-24 h-24 rounded-md"
@@ -96,7 +138,7 @@ export default function Hero() {
                   <div className="mt-2 text-lg font-semibold">Number</div>
                   <div className="text-yellow-500">x22.30</div>
                 </div>
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center" onClick={() => openModal(coin)}>
                   <img
                     alt="Warriors"
                     className="w-24 h-24 rounded-md"
@@ -111,6 +153,7 @@ export default function Hero() {
                   <div className="mt-2 text-lg font-semibold">Dice</div>
                   <div className="text-yellow-500">x12.30</div>
                 </div>
+                
               </div>
               <div className="flex items-center justify-center mb-4">
                 <div className="text-4xl font-bold">29</div>
@@ -130,11 +173,26 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      {showModal && (
+        <div className="fixed top-0 left-0  w-full h-full flex flex-col items-center justify-center bg-gray-800 bg-opacity-50">
+            <button onClick={closeModal} className="bg-red-800 text-white p-2 rounded-xl px-3">Close</button>
+          <div className="bg-white p-4 rounded-lg w-[300px] h-[300px]">
+            <div>
+              <input type="text" 
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder="Enter Link..." 
+
+              className="border rounded p-2"/>
+              <button className="bg-green-500 p-2 rounded text-white font-bold" onClick={flipCoin}>Go</button>
+            </div>
+            {<p>{winner}</p>}
+          </div>
+        </div>
+      )}
     </div>
   );
-}
-
-function CoinsIcon(props) {
+}function CoinsIcon(props) {
   return (
     <svg
       {...props}
