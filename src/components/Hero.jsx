@@ -101,7 +101,8 @@ export default function Hero() {
                     height="100"
                     src={spin}
                     style={{
-                      aspectRatio: "100/100",objectFit: "cover",
+                      aspectRatio: "100/100",
+                      objectFit: "cover",
                     }}
                     width="100"
                   />
@@ -192,7 +193,9 @@ export default function Hero() {
       )}
     </div>
   );
-}function CoinsIcon(props) {
+}
+
+function CoinsIcon(props) {
   return (
     <svg
       {...props}
